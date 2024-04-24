@@ -54,7 +54,7 @@
             <th>Severity</th>
             <th>Tool</th>
             <th>Vulnerability</th>
-            <#if issues[0].foundBy=="trivy">
+            <#if issues[0].foundBy=="trivy" || issues[0].foundBy=="code-scoring">
                 <th>Fix Version</th>
             </#if>
         </tr>
@@ -66,7 +66,7 @@
                 <td>${issue.severity}</td>
                 <td><a href="${issue.externalLink}">${issue.foundBy}</a></td>
                 <td><a href="${issue.cve.link}">${issue.cve.id}</a></td>
-                <#if issue.foundBy=="trivy">
+                <#if issue.foundBy=="trivy" || issue.foundBy=="code-scoring">
                     <td>${issue.fixVersion}</td>
                 </#if>
             </tr>
@@ -80,7 +80,7 @@
         <p>Severity: ${issue.severity}</p>
         <p>Tool: <a href="${issue.externalLink}">${issue.foundBy}</a></p>
         <p>Vulnerability: <a href="${issue.cve.link}">${issue.cve.id}</a></p>
-        <#if issue.foundBy=="trivy"><p>Fix version: ${issue.fixVersion}</p></#if>
+        <#if issue.foundBy=="trivy" || issue.foundBy=="code-scoring"><p>Fix version: ${issue.fixVersion}</p></#if>
     </#list>
 </#if>
 
