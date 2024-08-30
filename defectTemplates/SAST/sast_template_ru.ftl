@@ -90,12 +90,17 @@
     <#list issues?sort_by("severity") as issue>
         <tr>
             <td><a href="${issue.link}">${issue.id}</a></td>
-            <td><th>Трасса</th><br>
-                <#list issue.path as item>
-                    ${item.fileName}:${item.line}<br><code>${item.sourceCode?html}</code><#sep><br></#sep>
-                </#list>
-                <br>
-                <p>Описание</p><br>
+            <td><p><b>Трасса</b></p>
+                <ul>
+                    <#list issue.path as item>
+                        <li>
+                            <p>${item.fileName}:${item.line}
+                            <p><code>${item.sourceCode?html}</code>
+                            <#sep><p></#sep>
+                        </li>
+                    </#list>
+                </ul>
+                <p><b>Описание</b></p>
                 ${issue.description}
             </td>
         </tr>
