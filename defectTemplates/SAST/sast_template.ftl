@@ -1,3 +1,10 @@
+<#macro linkOrText href text>
+    <#if href!="">
+        <a href="${href}">${text}</a>
+    <#else>
+        ${text}
+    </#if>
+</#macro>
 <#macro tableRowIfParamIsNotEmptyString name param>
     <#if param!="">
         <tr>
@@ -58,12 +65,12 @@
 
         <#list issues?sort_by("severity") as issue>
             <tr>
-                <td><a href="${issue.link}">${issue.id}</a></td>
+                <td><@linkOrText href=issue.link text=issue.id/></td>
                 <#if issue.path?size gt 0>
                     <td>${issue.path[0].fileName}:${issue.path[0].line}</td>
                 </#if>
                 <td>${issue.severity}</td>
-                <td><a href="${issue.externalLink}">${issue.foundBy}</a></td>
+                <td><@linkOrText href=issue.externalLink text=issue.foundBy/></td>
                 <td>${issue.category}</td>
             </tr>
         </#list>
@@ -71,12 +78,12 @@
 </#if>
 <#if issues?size == 1>
     <#list issues as issue>
-        <p>ID: <a href="${issue.link}">${issue.id}</a></p>
+        <p>ID: <@linkOrText href=issue.link text=issue.id/></p>
         <#if issue.path?size gt 0>
             <p>File: ${issue.path[0].fileName}:${issue.path[0].line}</p>
         </#if>
         <p>Severity: ${issue.severity}</p>
-        <p>Tool: <a href="${issue.externalLink}">${issue.foundBy}</a></p>
+        <p>Tool: <@linkOrText href=issue.externalLink text=issue.foundBy/></p>
         <p>Category: ${issue.category}</p>
     </#list>
 </#if>
@@ -89,7 +96,7 @@
     </tr>
     <#list issues?sort_by("severity") as issue>
         <tr>
-            <td><a href="${issue.link}">${issue.id}</a></td>
+            <td><@linkOrText href=issue.link text=issue.id/></td>
             <td><p><b>Path</b></p>
                 <ul>
                     <#list issue.path as item>

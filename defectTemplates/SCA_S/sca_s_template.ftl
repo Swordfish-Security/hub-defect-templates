@@ -1,3 +1,10 @@
+<#macro linkOrText href text>
+    <#if href!="">
+        <a href="${href}">${text}</a>
+    <#else>
+        ${text}
+    </#if>
+</#macro>
 <#macro tableRowIfParamIsNotEmptyString name param>
     <#if param!="">
         <tr>
@@ -59,11 +66,11 @@
 
         <#list issues?sort_by("severity") as issue>
             <tr>
-                <td><a href="${issue.link}">${issue.id}</a></td>
+                <td><@linkOrText href=issue.link text=issue.id/></td>
                 <td>${issue.title}</td>
                 <td>${issue.severity}</td>
-                <td><a href="${issue.externalLink}">${issue.foundBy}</a></td>
-                <td><a href="${issue.cve.link}">${issue.cve.id}</a></td>
+                <td><@linkOrText href=issue.externalLink text=issue.foundBy/></td>
+                <td><@linkOrText href=issue.cve.link text=issue.cve.id/></td>
                 <td><#if issue.fixVersion!="">${issue.fixVersion}<#else>No info</#if></td>
             </tr>
         </#list>
@@ -71,11 +78,11 @@
 </#if>
 <#if issues?size == 1>
     <#list issues?sort_by("severity") as issue>
-        <p>ID: <a href="${issue.link}">${issue.id}</a></p>
+        <p>ID: <@linkOrText href=issue.link text=issue.id/></p>
         <p>Component: ${issue.title}</p>
         <p>Severity: ${issue.severity}</p>
-        <p>Tool: <a href="${issue.externalLink}">${issue.foundBy}</a></p>
-        <p>Vulnerability: <a href="${issue.cve.link}">${issue.cve.id}</a></p>
+        <p>Tool: <@linkOrText href=issue.externalLink text=issue.foundBy/></p>
+        <p>Vulnerability: <@linkOrText href=issue.cve.link text=issue.cve.id/></p>
         <#if issue.fixVersion!=""><p>Fix version: ${issue.fixVersion}</p></#if>
     </#list>
 </#if>
@@ -88,7 +95,7 @@
     </tr>
     <#list issues?sort_by("severity") as issue>
         <tr>
-            <td><a href="${issue.link}">${issue.id}</a></td>
+            <td><@linkOrText href=issue.link text=issue.id/></td>
             <td>${issue.description}</td>
         </tr>
     </#list>

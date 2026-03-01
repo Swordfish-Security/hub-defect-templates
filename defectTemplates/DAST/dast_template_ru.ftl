@@ -1,3 +1,10 @@
+<#macro linkOrText href text>
+    <#if href!="">
+        <a href="${href}">${text}</a>
+    <#else>
+        ${text}
+    </#if>
+</#macro>
 <#macro tableRowIfParamIsNotEmptyString name param>
     <#if param!="">
         <tr>
@@ -57,20 +64,20 @@
 
         <#list issues?sort_by("severity") as issue>
             <tr>
-                <td><a href="${issue.link}">${issue.id}</a></td>
+                <td><@linkOrText href=issue.link text=issue.id/></td>
                 <td>${issue.title}</td>
                 <td>${issue.severity}</td>
-                <td><a href="${issue.externalLink}">${issue.foundBy}</a></td>
+                <td><@linkOrText href=issue.externalLink text=issue.foundBy/></td>
             </tr>
         </#list>
     </table>
 </#if>
 <#if issues?size == 1>
     <#list issues as issue>
-        <p>ID: <a href="${issue.link}">${issue.id}</a></p>
+        <p>ID: <@linkOrText href=issue.link text=issue.id/></p>
         <p>Расположение: ${issue.title}</p>
         <p>Серьёзность: ${issue.severity}</p>
-        <p>Инструмент: <a href="${issue.externalLink}">${issue.foundBy}</a></p>
+        <p>Инструмент: <@linkOrText href=issue.externalLink text=issue.foundBy/></p>
     </#list>
 </#if>
 
@@ -82,7 +89,7 @@
     </tr>
     <#list issues?sort_by("severity") as issue>
         <tr>
-            <td><a href="${issue.link}">${issue.id}</a></td>
+            <td><@linkOrText href=issue.link text=issue.id/></td>
             <td>${issue.description}</td>
         </tr>
     </#list>
